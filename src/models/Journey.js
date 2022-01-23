@@ -3,11 +3,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const Journey = new Schema({
-  code: {
-    type: String,
-    require: [true, "El campo código es requerido"],
-    unique: [true, "El campo código no debe repetirse"],
-  },
   origin: {
     type: String,
     require: [true, "El campo origen es requerido"],
@@ -24,9 +19,25 @@ const Journey = new Schema({
     type: String,
     require: [true, "El campo fecha de llegada es requerido"],
   },
+  stop: {
+    type: Number,
+    require: [true, "El campo paradas es requerido"],
+  },
   price: {
     type: Number,
     require: [true, "El campo precio es requerido"],
+  },
+  duration: {
+    type: Number,
+    require: [true, "El campo duración es requerido"],
+  },
+  airline: {
+    type: String,
+    require: [true, "El campo aerolinea es requerido"],
+  },
+  flight: {
+    type: String,
+    require: [true, "El campo vuelo es requerido"],
   },
 });
 

@@ -3,25 +3,41 @@ const JourneyModel = require("../models/Journey");
 const createJourney = async (req, res) => {
   try {
     const { body } = req;
-    const newJourney = new JourneyModel({
-      code: body.code,
-      origin: body.origin,
-      destination: body.destination,
-      departureDate: body.departureDate,
-      arrivalDate: body.returnDate,
-      price: body.price,
-    });
+    const newJourney = new JourneyModel({ ...body });
 
     await newJourney.save();
     res.status(200).send({ message: "Vuelo creado exitosamente" });
   } catch (error) {
+    console.log(error);
     errorResponse(res, error);
   }
 };
 
 const getJourneys = async (req, res) => {
   try {
-    const items = await JourneyModel.find();
+    let query = {};
+    query = Object.assign(
+      {
+        $and: [
+          { origin: new RegExp(`${req.body.origin}.*`, "i") },
+          { destination: new RegExp(`${req.body.destination}.*`, "i") },
+        ],
+      },
+      query
+    );
+
+    // query = Object.assign(
+    //   {
+    //     $and: [
+    //       { departureDate: { $gte: req.body.departureDate } },
+    //       { departureDate: { $lte: req.body.arrivalDate } },
+    //     ],
+    //   },
+    //   query
+    // );
+
+    console.log(query)
+    const items = await JourneyModel.find({ ...query });
     res.status(200).send({ items });
   } catch (error) {
     errorResponse(res, error);
@@ -30,9 +46,8 @@ const getJourneys = async (req, res) => {
 
 const getJourneyForId = (req, res) => {};
 
-
 const errorResponse = (res, error) => {
-  res.status(500).send({ message: "Server internal error", error  });
+  res.status(500).send({ message: "Server internal error", error });
 };
 
 module.exports = {
