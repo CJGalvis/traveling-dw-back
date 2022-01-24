@@ -4,6 +4,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const journeysRoutes = require('./routes/journey.routes');
+const usersRoutes = require('./routes/user.routes');
 
 const app = express();
 
@@ -14,5 +15,6 @@ app.use(cors())
 
 // Routes
 app.use('/api/journeys', journeysRoutes);
+app.use('/api/auth', usersRoutes);
 
 module.exports = app;

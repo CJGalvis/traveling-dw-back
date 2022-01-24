@@ -58,9 +58,14 @@ const register = async (req, res) => {
     };
     const newUser = new UserModel(dataNewUser);
     await newUser.save();
+    const payload = JSON.parse(JSON.stringify(dataNewUser, ["email"]));
+    const token = jwt.sign(payload, process.env.JWT_SECRET || "", {
+      expiresIn: process.env.EXPIRES_TOKEN,
+    });
     res.status(200).send({
       message: "Usuario creado exitosamente.",
       data: newUser,
+      token
     });
   } catch (error) {}
 };
