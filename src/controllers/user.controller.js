@@ -67,7 +67,14 @@ const register = async (req, res) => {
       data: newUser,
       token
     });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    errorResponse(res, error);
+  }
+};
+
+const errorResponse = (res, error) => {
+  res.status(500).send({ message: "Server internal error", error });
 };
 
 module.exports = {
