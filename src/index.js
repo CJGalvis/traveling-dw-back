@@ -1,6 +1,6 @@
 const app = require("./app.js");
 require("./database");
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   console.log("Server running...");
 });
