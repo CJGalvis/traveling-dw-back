@@ -25,18 +25,6 @@ const getJourneys = async (req, res) => {
       },
       query
     );
-
-    // query = Object.assign(
-    //   {
-    //     $and: [
-    //       { departureDate: { $gte: req.body.departureDate } },
-    //       { departureDate: { $lte: req.body.arrivalDate } },
-    //     ],
-    //   },
-    //   query
-    // );
-
-    console.log(query)
     const items = await JourneyModel.find({ ...query });
     res.status(200).send({ items });
   } catch (error) {
