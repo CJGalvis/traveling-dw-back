@@ -18,5 +18,8 @@ app.use(cors());
 app.use("/api/journeys", journeysRoutes);
 app.use("/api/auth", usersRoutes);
 app.use("/api/reservations", reservationsRoutes);
+app.get("/", (req, res) => {
+  res.send("Hi");
+});
 
 module.exports = app;
